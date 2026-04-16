@@ -6,44 +6,45 @@
   <title>CRM</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="bg-violet-400 p-6">
 
-  <h1 class="text-3xl font-bold mb-6 text-center">Gestor de Contactos</h1>
+  <h1 class="text-3xl font-bold mb-6 text-center text-white">Gestor de Contactos</h1>
   <!-- ======================================================
        SECCIÓN 1: Formulario para agregar / editar contacto
   ====================================================== -->
-  <section class="bg-white p-4 rounded mb-6">
-    <h2 class="text-lg font-semibold mb-4" id="form-title">Agregar contacto</h2>
+  <section class="bg-white p-4 rounded mb-6" id="form1">
+    <h2 class="text-lg font-semibold mb-4 text-white" id="form-title">Agregar contacto</h2>
 
     <input type="hidden" id="contact-id" />
 
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <label class="block text-sm mb-1">Nombre *</label>
-        <input id="input-name" type="text" placeholder="Ana López"
+        <label class="block text-sm mb-1 text-white">Nombre </label>
+        <input id="input-name" type="text" placeholder=""
                class="border w-full p-2 rounded" />
       </div>
       <div>
-        <label class="block text-sm mb-1">Email</label>
-        <input id="input-email" type="email" placeholder="ana@correo.com"
+        <label class="block text-sm mb-1 text-white">Email</label>
+        <input id="input-email" type="email" placeholder=""
                class="border w-full p-2 rounded" />
       </div>
       <div>
-        <label class="block text-sm mb-1">Teléfono</label>
-        <input id="input-phone" type="tel" placeholder="55 1234 5678"
+        <label class="block text-sm mb-1 text-white">Teléfono</label>
+        <input id="input-phone" type="tel" placeholder=""
                class="border w-full p-2 rounded" />
       </div>
       <div>
-        <label class="block text-sm mb-1">Notas</label>
-        <input id="input-notes" type="text" placeholder="Cliente, proveedor..."
+        <label class="block text-sm mb-1 text-white">Notas</label>
+        <input id="input-notes" type="text" placeholder=""
                class="border w-full p-2 rounded" />
       </div>
     </div>
 
     <div class="mt-4 flex gap-2">
       <button id="btn-save"
-              class="bg-blue-600 text-white px-4 py-2 rounded">
+              class=" text-white px-4 py-2">
         Guardar
       </button>
       <button id="btn-cancel"
@@ -60,8 +61,8 @@
   <!-- ======================================================
        SECCIÓN 2: Barra de búsqueda
   ====================================================== -->
-  <section class="bg-white p-4 rounded mb-6">
-    <h2 class="text-lg font-semibold mb-2">Buscar contacto</h2>
+  <section class="bg-white p-4 rounded mb-6" id="search-section">
+    <h2 class="text-lg font-semibold mb-2 text-center text-white">Buscar contacto</h2>
     <input id="input-search" type="text" placeholder="Buscar por nombre, email o teléfono..."
            class="border w-full p-2 rounded" />
   </section>
@@ -69,13 +70,13 @@
   <!-- ======================================================
        SECCIÓN 3: Tabla de contactos
   ====================================================== -->
-  <section class="bg-white p-4 rounded">
+  <section class="p-4 rounded" id="contacts-section">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-semibold">Contactos</h2>
       <span id="contact-count" class="text-sm text-gray-500">0 contactos</span>
     </div>
 
-    <table class="w-full text-sm">
+    <table class="w-full text-sm" id="table-contact">
       <thead>
         <tr class="border-b text-left">
           <th class="pb-2">Nombre</th>
