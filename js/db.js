@@ -34,11 +34,10 @@ export function getAllContacts() {
   // db.exec() ejecuta una query y devuelve los resultados
   const result = db.exec('SELECT * FROM contacts ORDER BY name ASC');
 
-  // Si no hay contactos, devuelve arreglo vacío
+  // Si no hay contactos
   if (result.length === 0) return [];
 
-  // sql.js devuelve los datos en este formato raro
-  // Lo convertimos a un arreglo de objetos normal
+  //formato a objetos 
   const { columns, values } = result[0];
 
   return values.map(row =>
@@ -49,7 +48,6 @@ export function getAllContacts() {
 
 export function addContact(contact) {
   // Los ? son marcadores de posición — NUNCA concatenes strings en SQL
-  // Esto previene SQL Injection aunque sea un proyecto local
   db.run(
     `INSERT INTO contacts (name, email, phone, notes)
      VALUES (?, ?, ?, ?)`,
@@ -86,7 +84,7 @@ export function updateContact(id, contact) {
      WHERE id = ?`,
     [contact.name, contact.email, contact.phone, contact.notes, id]
   );
-  //El WHERE id = ? es crítico. Sin él actualizarías todos los contactos a la vez.
+  //El WHERE id = ?,  Sin él actualizarías todos los contactos a la vez.
 }
 
 //!eliminar contacto

@@ -1,11 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
 </head>
-<body>
-    
+<body class="bg-violet-400 p-6">
+
+  <h1 class="text-3xl font-bold mb-6 text-center">Gestor de Contactos</h1>
+  <!-- ======================================================
+       SECCIÓN 1: Formulario para agregar / editar contacto
+  ====================================================== -->
+  <section class="bg-white p-4 rounded mb-6">
+    <h2 class="text-lg font-semibold mb-4" id="form-title">Agregar contacto</h2>
+
+    <input type="hidden" id="contact-id" />
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm mb-1">Nombre *</label>
+        <input id="input-name" type="text" placeholder="Ana López"
+               class="border w-full p-2 rounded" />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Email</label>
+        <input id="input-email" type="email" placeholder="ana@correo.com"
+               class="border w-full p-2 rounded" />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Teléfono</label>
+        <input id="input-phone" type="tel" placeholder="55 1234 5678"
+               class="border w-full p-2 rounded" />
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Notas</label>
+        <input id="input-notes" type="text" placeholder="Cliente, proveedor..."
+               class="border w-full p-2 rounded" />
+      </div>
+    </div>
+
+    <div class="mt-4 flex gap-2">
+      <button id="btn-save"
+              class="bg-blue-600 text-white px-4 py-2 rounded">
+        Guardar
+      </button>
+      <button id="btn-cancel"
+              class="bg-gray-300 px-4 py-2 rounded hidden">
+        Cancelar
+      </button>
+      <button id="btn-load-random"
+              class="bg-green-600 text-white px-4 py-2 rounded">
+        Cargar contacto 
+      </button>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       SECCIÓN 2: Barra de búsqueda
+  ====================================================== -->
+  <section class="bg-white p-4 rounded mb-6">
+    <h2 class="text-lg font-semibold mb-2">Buscar contacto</h2>
+    <input id="input-search" type="text" placeholder="Buscar por nombre, email o teléfono..."
+           class="border w-full p-2 rounded" />
+  </section>
+
+  <!-- ======================================================
+       SECCIÓN 3: Tabla de contactos
+  ====================================================== -->
+  <section class="bg-white p-4 rounded">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">Contactos</h2>
+      <span id="contact-count" class="text-sm text-gray-500">0 contactos</span>
+    </div>
+
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b text-left">
+          <th class="pb-2">Nombre</th>
+          <th class="pb-2">Email</th>
+          <th class="pb-2">Teléfono</th>
+          <th class="pb-2">Notas</th>
+          <th class="pb-2">Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="contacts-table-body">
+
+      </tbody>
+    </table>
+
+    <!-- Mensaje cuando no hay contactos -->
+    <p id="empty-message" class="text-center text-gray-400 py-6 hidden">
+      No hay contactos todavía. ¡Agrega el primero!
+    </p>
+  </section>
+
+  <!-- ======================================================
+       SCRIPTS — se cargan al final para que el HTML
+       ya esté listo cuando los scripts lo necesiten
+  ====================================================== -->
+
+  <!-- Módulo de base de datos -->
+  <script type="module" src="js/db.js"></script>
+
+  <!-- Módulo de la API -->
+  <script type="module" src="js/api.js"></script>
+
+  <!-- Lógica principal — debe ir último -->
+  <script type="module" src="js/app.js"></script>
+
 </body>
 </html>
