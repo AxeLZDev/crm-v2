@@ -4,7 +4,7 @@ let db = null;
 export async function initDB(){
     //!cargando archivo sql.js desde CDN
     const SQL = await initSqlJs({
-        locateFile: file => 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${file}'
+        locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${file}`
     });
 
     //*crear base de datos en memoria RAM

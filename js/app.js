@@ -1,10 +1,7 @@
 //*inicializando la db
-import { initDB, getAllContacts } from './db.js';
+import { initDB, getAllContacts, searchContacts, addContact, updateContact, removeContact } from './db.js';
+//import {} from './api.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-  await initDB();
-  renderContacts(getAllContacts());
-});
 
 //!renderizar contactos
 function renderContacts(contacts) {
@@ -39,9 +36,26 @@ function renderContacts(contacts) {
   `).join('');
 }
 
-//!boton guardar 
-import { addContact, updateContact, getAllContacts } from './db.js';
 
+//!limpiar formulario 
+function clearForm() {
+  document.getElementById('contact-id').value  = '';
+  document.getElementById('input-name').value  = '';
+  document.getElementById('input-email').value = '';
+  document.getElementById('input-phone').value = '';
+  document.getElementById('input-notes').value = '';
+  document.getElementById('form-title').textContent = 'Agregar contacto';
+  document.getElementById('btn-cancel').classList.add('hidden');
+}
+
+document.getElementById('btn-cancel').addEventListener('click', clearForm);
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await initDB();
+  renderContacts(getAllContacts());
+});
+
+//!boton guardar 
 document.getElementById('btn-save').addEventListener('click',() => {
   const id    = document.getElementById('contact-id').value;
   const name  = document.getElementById('input-name').value.trim();
@@ -105,22 +119,8 @@ window.handleDelete = function(id) {
 
 };
 
-//!limpiar formulario 
-function clearForm() {
-  document.getElementById('contact-id').value  = '';
-  document.getElementById('input-name').value  = '';
-  document.getElementById('input-email').value = '';
-  document.getElementById('input-phone').value = '';
-  document.getElementById('input-notes').value = '';
-  document.getElementById('form-title').textContent = 'Agregar contacto';
-  document.getElementById('btn-cancel').classList.add('hidden');
-}
-
-document.getElementById('btn-cancel').addEventListener('click', clearForm);
 
 //!buscar contacto 
-import { searchContacts, getAllContacts } from './db.js';
-
 document.getElementById('input-search').addEventListener('input', (e) => {
   const term = e.target.value.trim();
 
