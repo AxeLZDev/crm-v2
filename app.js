@@ -60,6 +60,11 @@ document.getElementById('btn-save').addEventListener('click',() => {
     return;
   }
 
+  if(email && !/^\S+@\S+\.\S+$/.test(email)) {
+    alert('El email no es válido');
+    return;
+  }
+
   if (id) {
     updateContact(Number(id), { name, email, phone, notes });
   } else {
@@ -112,3 +117,16 @@ function clearForm() {
 }
 
 document.getElementById('btn-cancel').addEventListener('click', clearForm);
+
+//!buscar contacto 
+import { searchContacts, getAllContacts } from './db.js';
+
+document.getElementById('input-search').addEventListener('input', (e) => {
+  const term = e.target.value.trim();
+
+  if (term === '') {
+    renderContacts(getAllContacts());  // si borra todo, muestra todos
+  } else {
+    renderContacts(searchContacts(term));
+  }
+});
