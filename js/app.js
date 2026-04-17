@@ -74,6 +74,11 @@ document.getElementById('btn-save').addEventListener('click',() => {
     return;
   }
 
+  if (!/^\d{10}$/.test(phone)) {
+    alert('El teléfono debe contener exactamente 10 dígitos numéricos');
+    return;
+  }
+
   if(email && !/^\S+@\S+\.\S+$/.test(email)) {
     alert('El email no es válido');
     return;
