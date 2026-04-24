@@ -140,3 +140,18 @@ document.getElementById('input-search').addEventListener('input', (e) => {
     renderContacts(searchContacts(term));
   }
 });
+
+  //! llamar a la API y rellenar el formulario
+document.getElementById('btn-load-random').addEventListener('click', async () => {
+
+  try {
+    document.getElementById('contact-id').value = '';
+    const contact = await fetchRandomContact();
+    document.getElementById('input-name').value = contact.name;
+    document.getElementById('input-email').value = contact.email;
+    document.getElementById('input-phone').value = contact.phone;
+  } catch (error) {
+    alert('Error al cargar contacto aleatorio');
+    console.error(error);
+  }
+});
