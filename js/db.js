@@ -133,4 +133,5 @@ export function updateContact(id, contact) {
 //!eliminar contacto
 export function removeContact(id) {
   db.run('DELETE FROM contacts WHERE id = ?', [id]);
+  saveDB();
 }
