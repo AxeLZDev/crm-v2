@@ -1,18 +1,44 @@
 //conexion a db
-let db = null; 
+let db = null;
+let SQL = null;
+
+const DB_KEY = 'crm_database';
 
 export async function initDB(){
     //!cargando archivo sql.js desde CDN
-    const SQL = await window.initSqlJs({
+    SQL = await window.initSqlJs({
         locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${file}`
     });
 
-    //*crear base de datos en memoria RAM
-    db = new SQL.Database(); 
-
-    createTables();
+    //*cargar BD del localStorage o crear nueva
+    const savedDB = localStorage.getItem(DB_KEY);
+    
+    if (savedDB) {
+        // Cargar BD guardada
+        const binaryString = atob(savedDB);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        db = new SQL.Database(bytes);
+        console.log('Base de datos restaurada desde almacenamiento local');
+    } else {
+        // Crear BD nueva
+        db = new SQL.Database();
+        createTables();
+        saveDB();
+        console.log('Base de datos nueva creada');
+    }
 
     console.log('Base de datos Lista');
+}
+
+//!guardar BD en localStorage
+function saveDB() {
+    const data = db.export();
+    const binary = String.fromCharCode.apply(null, data);
+    const base64 = btoa(binary);
+    localStorage.setItem(DB_KEY, base64);
 }
 
 function createTables(){
@@ -68,6 +94,7 @@ export function addContact(contact) {
      VALUES (?, ?, ?, ?)`,
     [contact.name, contact.email, contact.phone, contact.notes]
   );
+  saveDB();
 }
 
 //!buscar contacto
@@ -100,6 +127,7 @@ export function updateContact(id, contact) {
     [contact.name, contact.email, contact.phone, contact.notes, id]
   );
   //El WHERE id = ?,  Sin él actualizarías todos los contactos a la vez.
+  saveDB();
 }
 
 //!eliminar contacto

@@ -1,6 +1,6 @@
 //*inicializando la db
 import { initDB, getAllContacts, searchContacts, addContact, updateContact, removeContact, phoneExists } from './db.js';
-//import {} from './api.js';
+import { fetchRandomContact } from './api.js';
 
 
 //!renderizar contactos
