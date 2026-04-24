@@ -3,12 +3,12 @@ let db = null;
 
 export async function initDB(){
     //!cargando archivo sql.js desde CDN
-    const SQL = await initSqlJs({
+    const SQL = await window.initSqlJs({
         locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${file}`
     });
 
     //*crear base de datos en memoria RAM
-    db = loadDB(SQL); 
+    db = new SQL.Database(); 
 
     createTables();
 
@@ -17,10 +17,10 @@ export async function initDB(){
 
 function createTables(){
     db.run(`
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS contacts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE,
+            email TEXT,
             phone TEXT,
             notes TEXT,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
@@ -44,6 +44,21 @@ export function getAllContacts() {
     Object.fromEntries(columns.map((col, i) => [col, row[i]]))
   );
 
+}
+
+//!validar telefono duplicado
+export function phoneExists(phone, excludeId = null) {
+  let query = 'SELECT * FROM contacts WHERE phone = ?';
+  let params = [phone];
+  
+  // Si estamos editando, excluir el contacto actual
+  if (excludeId !== null) {
+    query += ' AND id != ?';
+    params.push(excludeId);
+  }
+  
+  const result = db.exec(query, params);
+  return result.length > 0 && result[0].values.length > 0;
 }
 
 export function addContact(contact) {

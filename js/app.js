@@ -1,5 +1,5 @@
 //*inicializando la db
-import { initDB, getAllContacts, searchContacts, addContact, updateContact, removeContact } from './db.js';
+import { initDB, getAllContacts, searchContacts, addContact, updateContact, removeContact, phoneExists } from './db.js';
 //import {} from './api.js';
 
 
@@ -76,6 +76,11 @@ document.getElementById('btn-save').addEventListener('click',() => {
 
   if (!/^\d{10}$/.test(phone)) {
     alert('El teléfono debe contener exactamente 10 dígitos numéricos');
+    return;
+  }
+
+  if (phoneExists(phone, id ? Number(id) : null)) {
+    alert('Este número de teléfono ya está registrado');
     return;
   }
 
