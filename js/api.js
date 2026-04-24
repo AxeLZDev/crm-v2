@@ -5,10 +5,14 @@ export async function fetchRandomContact() {
   // 2. Convertir la respuesta a JSON
   const data = await response.json();
   // 3. Extraer los datos del primer resultado
-  const { name, email, phone } = data.results[0];
-  // 4. Limpiar el teléfono
-  const cleanPhone = phone.replace(/\D/g, '').slice(0, 10);
-  // 5. Devolver objeto con { name, email, phone }
+  const user = data.results[0];
+  // 4. Extraer nombre completo (first + last)
+  const name = `${user.name.first} ${user.name.last}`;
+  const email = user.email;
+  const phone = user.phone;
+  // 5. Limpiar el teléfono - extraer solo dígitos y tomar los primeros 10
+  const cleanPhone = phone.replace(/\D/g, '').slice(-10);
+  // 6. Devolver objeto con { name, email, phone }
   return { name, email, phone: cleanPhone };
 }
 
